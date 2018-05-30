@@ -1,0 +1,19 @@
+{
+  "name": "szolnok-timetables",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cszoltan422/szolnok-timetable.git"
+  },
+  "author": "Zoltan Csenyi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cszoltan422/szolnok-timetable/issues"
+  },
+  "homepage": "https://github.com/cszoltan422/szolnok-timetable#readme"
+}
