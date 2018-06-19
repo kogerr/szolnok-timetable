@@ -1,19 +1,27 @@
-const busRoute = require('./../domain/busRoute');
+require('./../domain/busRoute');
+const mongoose = require('mongoose');
+const busRoute =  mongoose.model('busRoute');
 
+const getBusesQuery = busRoute.find({}).select({'routename': 1, '_id': 0});
 
-let getBuses = () => {
-
+exports.getBuses = () => {
+    return new Promise((resolve, reject) => {
+        getBusesQuery.exec((err, data) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(data.map((element => {
+              return element.routename;  
+            })));
+        });
+    });
 };
 
 
-let getBusStops = (busName, startStop) => {
+exports.getBusStops = (busName, startStop) => {
 
 };
 
-let getTimeTableOfBusStop = (busName, startStop, day) => {
+exports.getTimeTableOfBusStop = (busName, startStop, day) => {
 
 };
-
-module.exports = getBuses;
-module.exports = getBusStops;
-module.exports = getTimeTableOfBusStop;
