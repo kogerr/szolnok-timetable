@@ -1,4 +1,4 @@
-let app = require('./app/express/express');
+let app = require('express')();
 let mongoose = require('mongoose');
 let buslines = require('./routes/buslines');
 let busStops = require('./routes/busStops');
