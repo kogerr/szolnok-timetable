@@ -1,8 +1,6 @@
-'use strict';
+const mongoose = require('mongoose');
 
-var mongoose = require('mongoose');
-
-var busRouteSchema  = mongoose.Schema({
+const busRouteSchema  = mongoose.Schema({
 	routename: 'String',
 	busRouteLines: [{
         startBusStop: 'String',
