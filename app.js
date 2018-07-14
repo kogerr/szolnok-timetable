@@ -2,6 +2,7 @@ let app = require('express')();
 let mongoose = require('mongoose');
 let buslines = require('./routes/buslines');
 let busStops = require('./routes/busStops');
+let timetable = require('./routes/timetable');
 let logger = require('./logger/logger');
 
 let username = process.env.MONGODB_USERNAME;
@@ -27,6 +28,7 @@ app.set('port', 8080);
 app.use(expressLogger);
 app.use('/buses', buslines);
 app.use('/busStop', busStops);
+app.use('/timetable', timetable);
 
 let server = app.listen(app.get('port'), () => {
     let port = server.address().port;

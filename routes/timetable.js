@@ -1,5 +1,5 @@
 const express = require('express');
-const buslinesDao = require('./../dao/buslinesDao');
+const timetableDao = require('./../dao/timetableDao');
 const apicache = require('apicache');
 const cache = apicache.middleware;
 const router = express.Router();
@@ -7,14 +7,14 @@ const router = express.Router();
 const onlyStatus200 = (req, res) => res.statusCode === 200;
 const cacheSuccesses = cache('50 minutes', onlyStatus200);
 
-router.get('/', cacheSuccesses, (req, res) => {
-    buslinesDao.getBuses()
+router.get('/:routename/:startStop/:busStop', cacheSuccesses, (req, res) => {
+    timetableDao.getTimeTableOfBusStop(req.params.routename, req.params.startStop, req.params.busStop, req.query.occurrence)
         .then((data) => {
             res.statusCode = 200;
             res.send(data);
-        }).catch((err) => {
-            res.statusCode = 500;
-            res.send(err);
+        }).catch((error) => {
+            res.statusCode = 403;
+            res.send(error);
         });
 });
 
