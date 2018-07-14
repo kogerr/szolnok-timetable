@@ -1,8 +1,8 @@
 let app = require('express')();
 let mongoose = require('mongoose');
-let buslines = require('./routes/buslines');
-let busStops = require('./routes/busStops');
-let timetable = require('./routes/timetable');
+let buslines = require('./getBuslines/buslines');
+let busStops = require('./getBusStops/busStops');
+let timetable = require('./getTimetable/timetable');
 let logger = require('./logger/logger');
 
 let username = process.env.MONGODB_USERNAME;

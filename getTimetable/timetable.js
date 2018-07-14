@@ -1,5 +1,5 @@
 const express = require('express');
-const timetableDao = require('./../dao/timetableDao');
+const timetableDao = require('./../getTimetable/timetableDao');
 const apicache = require('apicache');
 const cache = apicache.middleware;
 const router = express.Router();

@@ -1,5 +1,5 @@
 const express = require('express');
-const buslinesDao = require('./../dao/buslinesDao');
+const buslinesDao = require('./../getBuslines/buslinesDao');
 const apicache = require('apicache');
 const cache = apicache.middleware;
 const router = express.Router();
