@@ -13,7 +13,6 @@ router.get('/', cacheSuccesses, (req, res) => {
             res.statusCode = 200;
             res.send(data);
         }).catch((err) => {
-            console.log('buslinses: ' + err);
             res.statusCode = 500;
             res.send(err);
         });

@@ -13,7 +13,6 @@ router.get('/:routename', cacheSuccesses, (req, res) => {
             res.statusCode = 200;
             res.send(data);
         }).catch((error) => {
-            console.log('busStops: ' + error);
             res.statusCode = 403;
             res.send(error);
         });

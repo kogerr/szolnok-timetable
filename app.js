@@ -2,6 +2,7 @@ let app = require('express')();
 let mongoose = require('mongoose');
 let buslines = require('./routes/buslines');
 let busStops = require('./routes/busStops');
+let logger = require('./logger/logger');
 
 let username = process.env.MONGODB_USERNAME;
 let password = process.env.MONGODB_PASSWORD;
@@ -11,17 +12,23 @@ let db = process.env.MONGODB_DBNAME;
 
 mongoose.connect('mongodb://' + username + ':' + password + '@' + host + ':' + port + '/' + db).then(
   () => {
-    console.log('Successfully connected to database!');
+    logger.info('Successfully connected to database!');
   },
-  (err) => { console.log(err); }
+  (err) => { logger.error(err); }
 );
+
+let expressLogger = (req, res, next) => {
+  logger.info('Method: ' + req.method + ', url: ' + req.originalUrl + ',  body: ' + req.body);
+  next();
+};
 
 app.set('port', 8080);
 
+app.use(expressLogger);
 app.use('/buses', buslines);
 app.use('/busStop', busStops);
 
-let server = app.listen(app.get('port'), function () {
+let server = app.listen(app.get('port'), () => {
     let port = server.address().port;
-    console.log('Listening on port ' + port);
+    logger.info('Listening on port ' + port);
 });
