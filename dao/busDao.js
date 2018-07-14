@@ -1,12 +1,15 @@
 require('./../domain/busRoute');
 const mongoose = require('mongoose');
 const busRoute =  mongoose.model('busRoute');
+const error = {"message": "Bad request"};
+
 
 exports.getBuses = () => {
     return new Promise((resolve, reject) => {
         busRoute.find({}).select({'routename': 1, '_id': 0}).exec((err, data) => {
-            if (err) {
-                reject(err);
+            if (err || !data) {
+                reject(error);
+                return;
             }
             resolve(data.map((element => {
               return element.routename;  
@@ -30,8 +33,9 @@ let buildResultOfBusStopsQuery = (data, index) => {
 exports.getBusStops = (busName, startStop) => {
     return new Promise((resolve, reject) => {
         busRoute.findOne({"routename": busName}, (err, data) => {
-            if (err) {
-                reject(err);
+            if (!data || err) {
+                reject(error);
+                return;
             }
             let result = {};
             if (startStop && data.busRouteLines[1] && data.busRouteLines[1].startBusStop === startStop) {
@@ -40,6 +44,7 @@ exports.getBusStops = (busName, startStop) => {
                 result = buildResultOfBusStopsQuery(data, 0);
             }
             resolve(result);
+            return;
         });
     });
 };

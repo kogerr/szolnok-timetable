@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "test"
+    "test": "test",
+    "release": "./release.sh"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,7 @@
   "homepage": "https://github.com/cszoltan422/szolnok-timetable#readme",
   "dependencies": {
     "express": "^4.16.3",
-    "memory-cache": "^0.2.0",
+    "apicache": "1.2.3",
     "mongoose": "^5.1.4"
   }
 }

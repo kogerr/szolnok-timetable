@@ -1,16 +1,20 @@
 const express = require('express');
-const cache = require('./../cache/cache');
 const busDao = require('./../dao/busDao');
+const apicache = require('apicache');
+const cache = apicache.middleware;
 const router = express.Router();
 
-router.get('/:routename', cache(3600), (req, res) => {
+const onlyStatus200 = (req, res) => res.statusCode === 200;
+const cacheSuccesses = cache('50 minutes', onlyStatus200);
+
+router.get('/:routename', cacheSuccesses, (req, res) => {
     busDao.getBusStops(req.params.routename, req.query.startStop)
         .then((data) => {
             res.statusCode = 200;
             res.send(data);
         }).catch((error) => {
-            console.log(error);
-            res.statusCode = 500;
+            console.log('busStops: ' + error);
+            res.statusCode = 403;
             res.send(error);
         });
 });

@@ -1,15 +1,19 @@
 const express = require('express');
-const cache = require('./../cache/cache');
 const busDao = require('./../dao/busDao');
+const apicache = require('apicache');
+const cache = apicache.middleware;
 const router = express.Router();
 
-router.get('/', cache(3600), (req, res) => {
+const onlyStatus200 = (req, res) => res.statusCode === 200;
+const cacheSuccesses = cache('50 minutes', onlyStatus200);
+
+router.get('/', cacheSuccesses, (req, res) => {
     busDao.getBuses()
         .then((data) => {
             res.statusCode = 200;
             res.send(data);
         }).catch((err) => {
-            console.log(err);
+            console.log('buslinses: ' + err);
             res.statusCode = 500;
             res.send(err);
         });
