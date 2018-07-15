@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
 
 const busRouteSchema  = mongoose.Schema({
 	routename: 'String',
@@ -33,4 +33,4 @@ const busRouteSchema  = mongoose.Schema({
 	_class: 'String'
 });
 
-mongoose.model('busRoute', busRouteSchema, 'busRoute');
+export default mongoose.model('busRoute', busRouteSchema, 'busRoute');

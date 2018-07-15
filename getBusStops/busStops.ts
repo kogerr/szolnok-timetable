@@ -1,13 +1,13 @@
-const express = require('express');
-const busStopsDao = require('./../getBusStops/busStopsDao');
-const apicache = require('apicache');
+import * as express from 'express';
+import * as busStopsDao from './../getBusStops/busStopsDao';
+import * as apicache from 'apicache';
 const cache = apicache.middleware;
-const router = express.Router();
+let router: express.Router = express.Router();
 
 const onlyStatus200 = (req, res) => res.statusCode === 200;
 const cacheSuccesses = cache('50 minutes', onlyStatus200);
 
-router.get('/:routename', cacheSuccesses, (req, res) => {
+router.route('/:routename').get(cacheSuccesses, (req, res) => {
     busStopsDao.getBusStops(req.params.routename, req.query.startStop)
         .then((data) => {
             res.statusCode = 200;
@@ -18,4 +18,4 @@ router.get('/:routename', cacheSuccesses, (req, res) => {
         });
 });
 
-module.exports = router;
+export default router;

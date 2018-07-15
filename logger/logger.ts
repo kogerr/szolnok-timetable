@@ -1,13 +1,13 @@
-const winston = require('winston');
-const moment = require('moment');
+import * as winston from 'winston';
+import * as moment from 'moment';
 
 const timestampFormat = () => moment().format('YYYY-MM-DD hh:mm:ss').trim();
 
 const myFormat = winston.format.printf(info => {
     return `[${info.timestamp} | ${info.level.toUpperCase()} | ${info.message}]`;
-  });
+});
 
-module.exports = winston.createLogger({
+export default winston.createLogger({
     level: 'info',
     format: winston.format.combine(
         winston.format.timestamp({
@@ -18,4 +18,4 @@ module.exports = winston.createLogger({
     transports: [
         new winston.transports.Console()
     ]
-  });
+});

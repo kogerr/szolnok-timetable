@@ -1,6 +1,6 @@
-const express = require('express');
-const timetableDao = require('./../getTimetable/timetableDao');
-const apicache = require('apicache');
+import * as express from 'express';
+import * as timetableDao from './../getTimetable/timetableDao';
+import * as apicache from 'apicache';
 const cache = apicache.middleware;
 const router = express.Router();
 
@@ -18,4 +18,4 @@ router.get('/:routename/:startStop/:busStop', cacheSuccesses, (req, res) => {
         });
 });
 
-module.exports = router;
+export default router;

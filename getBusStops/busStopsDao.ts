@@ -1,26 +1,21 @@
-require('./../domain/busRoute');
-const mongoose = require('mongoose');
-const busRoute =  mongoose.model('busRoute');
-const logger = require('./../logger/logger');
-const errorObject = {"message": "Bad request"};
+import BusRouteModel from './../domain/busRoute';
+import logger from './../logger/logger';
+const errorObject = { "message": "Bad request" };
 
 
-let buildResultOfBusStopsQuery = (data, index) => {
-    let result = {};
-    result.routename = data.routename;
-    result.startStop = data.busRouteLines[index].startBusStop;
-    result.endStop = data.busRouteLines[index].endBusStop;
-    result.busStops = data.busRouteLines[index].busStops.map((element) => {
-        return element.busStopName;
-    });
-    return result;
+function buildResultOfBusStopsQuery(data, index): { routename: string, startStop: string, endStop: string, busStops: Array<string> } {
+    let routename = data.routename;
+    let startStop = data.busRouteLines[index].startBusStop;
+    let endStop = data.busRouteLines[index].endBusStop;
+    let busStops = data.busRouteLines[index].busStops.map(e => e.busStopName);
+    return { routename, startStop, endStop, busStops };
 };
 
 
-exports.getBusStops = (busName, startStop) => {
+export function getBusStops(busName, startStop): Promise<any> {
     return new Promise((resolve, reject) => {
         logger.info('Fetching busStops of [' + busName + '] with startStop [' + startStop + ']');
-        busRoute.findOne({"routename": busName}, (err, data) => {
+        BusRouteModel.findOne({ "routename": busName }, (err, data) => {
             if (!data || err) {
                 logger.error('Can\'t fetch busStops of bus [' + busName + '] and startStop [' + startStop + ']! Error: [' + err + '], data: [' + data + ']');
                 reject(errorObject);

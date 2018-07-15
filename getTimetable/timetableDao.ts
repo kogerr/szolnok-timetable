@@ -1,16 +1,12 @@
-require('./../domain/busRoute');
-const mongoose = require('mongoose');
-const busRoute =  mongoose.model('busRoute');
-const logger = require('./../logger/logger');
-const errorObject = {"message": "Bad request"};
+import BusRouteModel from './../domain/busRoute';
+import logger from './../logger/logger';
+const errorObject = { "message": "Bad request" };
 
 let buildResultOfTimetableQuery = (data, index, busStop, occurrence) => {
-    let result = {};
-    result.routename = data.routename;
-    result.startStop = data.busRouteLines[index].startBusStop;
-    result.endStop = data.busRouteLines[index].endBusStop;
-    result.busStopName = busStop;
-    result.occurrence = occurrence;
+    let routename = data.routename;
+    let startStop = data.busRouteLines[index].startBusStop;
+    let endStop = data.busRouteLines[index].endBusStop;
+    let busStopName = busStop;
 
     let busStopIndex = -1;
     let foundOccurrences = 0;
@@ -27,14 +23,14 @@ let buildResultOfTimetableQuery = (data, index, busStop, occurrence) => {
     if (busStopIndex < 0) {
         throw 'Error';
     }
-    result.timetable = data.busRouteLines[index].busStops[busStopIndex];
-    return result;
+    let timetable = data.busRouteLines[index].busStops[busStopIndex];
+    return { routename, startStop, endStop, busStopName, occurrence, timetable };
 };
 
-exports.getTimeTableOfBusStop = (busName, startStop, busStop, occurrence) => {
+export function getTimeTableOfBusStop(busName, startStop, busStop, occurrence) {
     return new Promise((resolve, reject) => {
         logger.info('Fetching timetable of [' + busName + '] from [' + startStop + '] in busStop [' + busStop + ']');
-        busRoute.findOne({"routename": busName}, (err, data) => {
+        BusRouteModel.findOne({ "routename": busName }, (err, data) => {
             if (!data || err) {
                 logger.error('Can\'t fetch timetable of bus [' + busName + '] from [' + startStop + '] in busStop [' + busStop + '] ! Error: [' + err + '], data: [' + data + ']');
                 reject(errorObject);

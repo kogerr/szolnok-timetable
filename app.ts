@@ -1,9 +1,13 @@
-let app = require('express')();
-let mongoose = require('mongoose');
-let buslines = require('./getBuslines/buslines');
-let busStops = require('./getBusStops/busStops');
-let timetable = require('./getTimetable/timetable');
-let logger = require('./logger/logger');
+import * as express from 'express';
+import * as mongoose from 'mongoose';
+import buslines from './getBuslines/buslines';
+import busStops from './getBusStops/busStops';
+import timetable from './getTimetable/timetable';
+import logger from './logger/logger';
+import { AddressInfo } from 'net';
+import { Request, Response, Express } from 'express';
+
+let app: Express = express();
 
 let username = process.env.MONGODB_USERNAME;
 let password = process.env.MONGODB_PASSWORD;
@@ -31,6 +35,6 @@ app.use('/busStop', busStops);
 app.use('/timetable', timetable);
 
 let server = app.listen(app.get('port'), () => {
-    let port = server.address().port;
-    logger.info('Listening on port ' + port);
+  let port = (server.address() as AddressInfo).port;
+  logger.info('Listening on port ' + port);
 });
