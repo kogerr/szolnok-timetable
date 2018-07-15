@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import buslines from './getBuslines/buslines';
-import busStops from './getBusStops/busStops';
+import busStops from './getBusStops/busStops.controller';
 import timetable from './getTimetable/timetable';
 import logger from './logger/logger';
 import { AddressInfo } from 'net';

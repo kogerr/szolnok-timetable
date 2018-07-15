@@ -1,5 +1,5 @@
 import * as express from 'express';
-import * as buslinesDao from './../getBuslines/buslinesDao';
+import * as buslinesDao from './buslinesDao';
 import * as apicache from 'apicache';
 const cache = apicache.middleware;
 const router: express.Router = express.Router();

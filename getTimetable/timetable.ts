@@ -1,5 +1,5 @@
 import * as express from 'express';
-import * as timetableDao from './../getTimetable/timetableDao';
+import * as timetableDao from './timetableDao';
 import * as apicache from 'apicache';
 const cache = apicache.middleware;
 const router = express.Router();
